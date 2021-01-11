@@ -22,7 +22,7 @@ public class Product implements Serializable{
 	private String description;
 	private String imageUri;
 
-	private Product() {
+	public Product() {
 		
 	}
 
