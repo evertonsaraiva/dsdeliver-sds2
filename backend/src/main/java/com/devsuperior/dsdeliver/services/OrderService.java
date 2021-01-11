@@ -35,10 +35,18 @@ public class OrderService {
 	public OrderDTO insert(OrderDTO dto){
 		Order order = new Order(null, dto.getAddress(), dto.getLatitude(), dto.getLongitude(), Instant.now(), OrderStatus.PENDING);
 		for(ProductDTO item : dto.getProducts()) {
-			Product product = productRepository.getOne(item.getId()); //associa produto sem ir ao bd
+			Product product = productRepository.getOne(item.getId()); //instancia, mas nao vai no bd monitorado pelo jpa
 			order.getProducts().add(product);
 		}
 		order = repository.save(order);
 		return new OrderDTO(order);
 	}	
+	
+	@Transactional
+	public OrderDTO setDelivered(Long id){
+		Order order = repository.getOne(id); //instancia, mas nao vai no bd monitorado pelo jpa
+		order.setStatus(OrderStatus.DELIVERED);
+		order = repository.save(order);
+		return new OrderDTO(order);		
+	}
 }
