@@ -18,6 +18,7 @@ function Orders() {
     return sum + item.price;
   }, 0);
 
+  
   useEffect(() => {
     fetchProducts()
       .then(response => setProducts(response.data))
